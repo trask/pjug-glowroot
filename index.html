@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="keywords" content="remark,remarkjs,markdown,slideshow,presentation"/>
+  <meta name="description" content="A simple, in-browser, markdown-driven slideshow tool."/>
+  <title>Glowroot</title>
+  <style type="text/css">
+    @import url(//fonts.googleapis.com/css?family=Droid+Serif);
+    @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+    @import url(//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+    body {
+      font-family: 'Droid Serif';
+    }
+
+    h1, h2, h3 {
+      font-family: 'Yanone Kaffeesatz';
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .remark-slide-content h1 {
+      font-size: 3em;
+    }
+
+    .remark-slide-content h2 {
+      font-size: 2em;
+    }
+
+    .remark-slide-content h3 {
+      font-size: 1.6em;
+    }
+
+    .footnote {
+      position: absolute;
+      bottom: 3em;
+    }
+
+    li p {
+      line-height: 1.25em;
+    }
+
+    .red {
+      color: #fa0000;
+    }
+
+    .large {
+      font-size: 2em;
+    }
+
+    a, a > code {
+      color: black;
+      text-decoration: none;
+    }
+
+    code {
+      -moz-border-radius: 5px;
+      -web-border-radius: 5px;
+      background: #e7e8e2;
+      border-radius: 5px;
+      padding: 20px !important;
+    }
+
+    .remark-code, .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+      font-size: 20px;
+    }
+
+    .remark-code-line-highlighted {
+      background-color: #373832;
+    }
+
+    .pull-left {
+      float: left;
+      width: 47%;
+    }
+
+    .pull-right {
+      float: right;
+      width: 47%;
+    }
+
+    .pull-right ~ p {
+      clear: both;
+    }
+
+    #slideshow .slide .content code {
+      font-size: 0.8em;
+    }
+
+    #slideshow .slide .content pre code {
+      font-size: 0.9em;
+      padding: 15px;
+    }
+
+    .inverse {
+      background: #272822;
+      color: #777872;
+      text-shadow: 0 0 20px #333;
+    }
+
+    .inverse h1, .inverse h2 {
+      color: #f3f3f3;
+      line-height: 0.8em;
+    }
+
+    /* Slide-specific styling */
+    #slide-inverse .footnote {
+      bottom: 12px;
+      left: 20px;
+    }
+
+    #slide-how .slides {
+      font-size: 0.9em;
+      position: absolute;
+      top: 151px;
+      right: 140px;
+    }
+
+    #slide-how .slides h3 {
+      margin-top: 0.2em;
+    }
+
+    #slide-how .slides .first, #slide-how .slides .second {
+      padding: 1px 20px;
+      height: 90px;
+      width: 120px;
+      -moz-box-shadow: 0 0 10px #777;
+      -webkit-box-shadow: 0 0 10px #777;
+      box-shadow: 0 0 10px #777;
+    }
+
+    #slide-how .slides .first {
+      background: #fff;
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      z-index: 1;
+    }
+
+    #slide-how .slides .second {
+      position: relative;
+      background: #fff;
+      z-index: 0;
+    }
+
+    /* Two-column layout */
+    .left-column {
+      color: #777;
+      width: 23%;
+      height: 92%;
+      float: left;
+    }
+
+    .left-column h2:last-of-type, .left-column h3:last-child {
+      color: #000;
+    }
+
+    .right-column {
+      width: 75%;
+      float: right;
+      padding-top: 1em;
+    }
+
+    .vcenter h1, .vcenter h2 {
+      margin-top: 0;
+    }
+
+    /* more horizontal realestate */
+    .remark-slide-content {
+      padding-left: 2em;
+      padding-right: 2em;
+    }
+
+    .right-column-incremental {
+      width: 75%;
+      float: right;
+    }
+
+    .section-top-padding {
+      padding-top: 30px;
+    }
+
+	.super-mini .remark-code {
+	  font-size: 7px;
+	  padding-left: 10px;
+	}
+	
+	.smaller .remark-code {
+	  font-size: 18px;
+	}
+	
+	.example-usage {
+	  margin-top: -20px;
+	}
+	
+	.example-code code {
+	  background: #666 !important;
+	}
+
+	.example-code .remark-code-line-highlighted {
+	  background: #888;
+	}
+    
+    .jigsaw1-image img {
+      padding-top: 30px;
+      padding-left: 10px;
+      height: 550px;
+    }
+    
+    .jigsaw2-image img {
+      padding-top: 60px;
+      height: 450px;
+    }
+    
+    .copyright {
+      font-size: 12px;
+    }
+    
+    .incremental-bullets ul {
+      margin: 0;
+    }
+    
+    li {
+      margin-top: 5px;
+    }
+    
+    .narrow-bullets li {
+      margin-top: 0;
+    }
+    
+    .padding-top-5 {
+      padding-top: 5px;
+    }
+    
+    .padding-top-40 {
+      padding-top: 40px;
+    }
+
+    .padding-top-50 {
+      padding-top: 50px;
+    }
+
+    .padding-top-100 {
+      padding-top: 100px;
+    }
+    
+    .padding-top-150 {
+      padding-top: 150px;
+    }
+    
+    .padding-left-50 {
+      padding-left: 50px;
+    }
+    
+    .center-and-width-600 {
+      text-align: center;
+      width: 540px;
+      margin: 0 auto;
+    }
+    
+    .center-and-width-500 {
+      text-align: center;
+      width: 500px;
+      margin: 0 auto;
+    }
+    
+    .larger {
+      font-size: 32px;
+    }
+    
+    .margin-top-10 h2 {
+      margin-top: 10px;
+    }
+
+    .margin-top-20 h2 {
+      margin-top: 20px;
+    }
+
+    .margin-top-50 h2 {
+      margin-top: 50px;
+    }
+    
+    .align-first-right tr td:first-of-type {
+      //text-align: right;
+      //padding-right: 20px;
+    }
+    
+    .padding-right-td-20 tr td:first-of-type {
+      padding-right: 20px;
+    }
+    </style>
+</head>
+<body>
+<textarea id="source">
+class: center, middle
+.vcenter[
+# Glowroot
+]
+
+
+
+---
+class: center
+
+.padding-top-150[
+# In the beginning (2009)
+]
+
+.padding-top-50[.center-and-width-600[
+## Mission: Identify and analyze long-running requests in production
+]]
+
+---
+## Capture Slow HTTP Requests (2009)
+
+```
+@Pointcut("execution(void javax.servlet.http.HttpServlet.do*("
+        + " javax.servlet.http.HttpServletRequest,"
+        + " javax.servlet.http.HttpServletResponse)")
+void servletPointcut() {}
+
+@Around("servletPointcut() && !cflowbelow(servletPointcut())"
+      + " && target(target) && args(request, ..)")
+public void aroundTopLevelServletPointcut(ProceedingJoinPoint joinPoint,
+        Object target, HttpServletRequest request) throws Throwable {
+    ...
+}
+```
+
+---
+## Capture Slow SQL (2009)
+
+```
+@Pointcut("call(java.sql.PreparedStatement+"
+        + " java.sql.Connection.prepare*(String, ..))")
+void prepare() {}
+
+@Around("prepare() && !cflowbelow(prepare()) && args(sql)")
+public Object prepareAdvice(ProceedingJoinPoint joinPoint, String sql) {
+    ...
+}
+```
+
+--
+```
+@Pointcut("call(* java.sql.PreparedStatement.execute*())")
+void execute() {}
+
+@Around("execute() && !cflowbelow(execute())")
+public Object executeAdvice(ProceedingJoinPoint joinPoint) {
+    ...
+}
+```
+
+
+---
+## Capture Stack Traces (2009)
+
+```
+... scheduled to run once per second
+public void run() {
+
+    ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
+
+    for (activeRequest : activeRequests) {
+
+        ThreadInfo threadInfo = threadBean.getThreadInfo(
+                activeRequest.getThreadId(), Integer.MAX_VALUE);
+
+        activeRequest.addStackTrace(threadInfo.getStackTrace(),
+                threadInfo.getThreadState());
+    }
+}
+```
+
+
+---
+class: center
+.padding-top-50[
+# Initial Deployment (2009)
+]
+
+.padding-top-50[
+## For each request exceeding threshold, write a plain text file:
+]
+
+
+.padding-top-50[.margin-top-10[
+## HTTP Request
+## SQL
+## Stack traces
+]]
+
+
+---
+class: center
+
+.padding-top-150[
+# The slow build out (2010-2013)
+]
+
+.padding-top-50[.center-and-width-600[
+## -javaagent, ASM, database and UI
+]]
+
+
+---
+class: center
+
+.padding-top-150[
+# Things get real (2014)
+]
+
+.padding-top-50[
+## First production deployments since the flat file days
+]
+
+???
+Features
+* Gauges
+* Continuous profiling
+
+
+---
+class: center
+
+.padding-top-150[
+# Serious about overhead (2014)
+]
+
+.padding-top-50[
+## JMH, Java Flight Recorder, JITWatch
+]
+
+???
+PJUG talk last December
+Memory footprint
+
+
+---
+class: center
+
+.padding-top-150[
+# Features (2015)
+]
+
+.padding-top-50[
+## Historical rollups, Percentiles, Profile filtering, Counter gauges, Alerting, SQL formatting, 4 New plugins, Agent API,<br>Central&nbsp;collector
+]
+
+
+???
+New Plugins
+* HttpClient
+* Cassandra
+* Quartz
+* JMS
+
+
+---
+class: center, middle
+.vcenter[
+# Demo
+## http://demo.glowroot.org
+]
+
+???
+Monitoring HeatClinic demo app: http://demo.broadleafcommerce.org
+
+Response time
+* Average
+  * Spike is in jdbc
+  * thymeleaf is custom instrumentation
+* Percentiles
+  * Want to see 99.9?
+* Throughput
+
+Continuous profiling
+* Last 2 days to get more statistically significant info
+* Filter
+  * hibernate -ehcache
+  * hibernate -ehcache -mariadb
+  * class.forname
+  * class.forname -ehcache
+  * class.forname -ehcache -PreferTCCLObjectInputStream
+  * class.forname PreferTCCLObjectInputStream
+  * blocked
+
+Slow traces
+* Was the original UI
+
+
+---
+class: center
+
+.padding-top-150[
+# The Future (2016)
+]
+
+.padding-top-50[
+## End user monitoring (Boomerang), Better alerting, Async&nbsp;call&nbsp;tracing, Distributed tracing (Zipkin), More plugins, Honest&nbsp;Profiler&nbsp;integration
+]
+
+
+---
+class: center
+
+# Things I ❤
+
+--
+.padding-top-40[
+## Checker Framework, SonarQube, UCDetector
+]
+
+--
+## Guava, Immutables
+
+--
+## Bootstrap, AngularJS, Grunt, Bower
+
+--
+## GitHub, Travis CI, SauceLabs
+
+
+???
+Too many things for slide
+* JMH
+* Java Flight Recorder
+* HDRHistogram
+* Honest Profiler
+* Protobuf
+* gRPC
+
+
+
+</textarea>
+<script src="//gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var hljs = remark.highlighter.engine;
+  
+  hljs.registerLanguage('protobuf', function () {
+    return {
+      keywords: {
+        keyword: 'package import option optional required repeated group',
+        built_in: 'double float int32 int64 uint32 uint64 sint32 sint64 ' +
+          'fixed32 fixed64 sfixed32 sfixed64 bool string bytes',
+        literal: 'true false'
+      },
+      contains: [
+        hljs.QUOTE_STRING_MODE,
+        hljs.NUMBER_MODE,
+        hljs.C_LINE_COMMENT_MODE,
+        {
+          className: 'class',
+          beginKeywords: 'message enum service', end: /\{/,
+          illegal: /\n/,
+          contains: [
+            hljs.inherit(hljs.TITLE_MODE, {
+              starts: {endsWithParent: true, excludeEnd: true} // hack: eating everything after the first title
+            })
+          ]
+        },
+        {
+          className: 'function',
+          beginKeywords: 'rpc',
+          end: /;/, excludeEnd: true,
+          keywords: 'rpc returns'
+        },
+        {
+          className: 'constant',
+          begin: /^\s*[A-Z][A-Z_]+/,
+          end: /\s*=/, excludeEnd: true
+        }
+      ]
+    };
+  });
+</script>
+<script type="text/javascript">
+  var slideshow = remark.create({
+      highlightStyle: 'tomorrow-night-bright',
+      highlightLanguage: 'java'
+    }) ;
+</script>
+</body>
+</html>
